@@ -1,6 +1,5 @@
 import pyautogui
 import pynput
-
 def test():
     print(pyautogui.size())
     for i in range(2): # Move mouse in a square.
@@ -9,14 +8,13 @@ def test():
 
 
 def test2():
-    x = 15
-    pyautogui.alert(f"you need {x}")
-
+    h = pyautogui.prompt('What is your name?')
+    print(h)
 
 
 def calculation():
-    oneLogo = int(input("How many logos are there?"))
-    goal = int(input("How much you need to make?"))
+    oneLogo = int(pyautogui.prompt("How many logos are there?"))
+    goal = int(pyautogui.prompt("How much you need to make?"))
     calc = goal // oneLogo
     remainder = goal % oneLogo
     if remainder >= 0.5:
@@ -38,12 +36,11 @@ def checker(i):
         else:
             print("not valid. Use a positive number")
             
-
+d = {} # logos and amount
+L = [] #goal
+A =[] # how many for goal
+logo = []
 def logosDictionary():
-    d = {} # logos and amount
-    L = [] #goal
-    A =[] # how many for goal
-    logo = []
     difLog = checker("How many different logos are there? ")  # user input
     if difLog > 0:
         for i in range(1, difLog + 1):
@@ -84,58 +81,109 @@ def logosDictionary():
 
     
     #print(A)
-    return d, L, A
-        
+    return d, L, A        
+
+
 
 def start():
     #d = {}  logos and amount
     #L = [] goal
     #A =[]  how many for goal
     d,L,A = logosDictionary()
-    for i in L:
-        for z in d:
-            if d[z] < i:
-                print("hi")
-            else:
-                print("no")
+    for key, num in d.items():
+        #print(f"There are {key}")
+        stuff.append(int(key))
+    logAmount = combind()
+    print("you can now press shift and s")
 
-
-
-
-
-def start1():
-    #d = {}  logos and amount
-    #L = [] goal
-    #A =[]  how many for goal
-    d,L,A = logosDictionary()
-    amount = 0
-    print(d,L,A)
-    for i in d:
-        amount = d[i]
-        print(amount)
-
-
-
-
-
+    return logAmount
         
         
-      
 
+
+
+    #pyautogui.alert(f"you need {x}")
+
+def combind():
+    logAmount = dict(zip(stuff, A))
+    return logAmount
     
 
-    
-    
-def math():
-    difLog = int(input("what is it"))
-    A = int(input("what is it"))
-    if difLog > 0 and A > 0:
-        return [difLog, A]
+#--------------
 
-def test():
-    math()
-    difLog = math([0])
-    A = math([1])
 
-#logosDictionary()
+
+#--------------
+from pynput import keyboard
+import threading
+
+COMBINATIONS = [
+    {keyboard.Key.shift, keyboard.KeyCode(char='s')},
+    {keyboard.Key.shift, keyboard.KeyCode(char='S')}
+]
+
+current = set()
+goalcount = 0
+stuff = []
+def execute1():
+    logAmount = combind()
+    global goalcount
+    goalcount +=1
+    for i in logAmount:
+        if logAmount[i] <= goalcount:
+            print(f"logo({i}) is finish")
+        else:
+            print(f"logo({i}) is not done")
+        
+
+    #print(stuff)
+        
+    #print(f"Shift + S hotkey detected {goalcount}")
+    #pyautogui.prompt('What is your name?')
+    return goalcount
+
+def execute():
+    #currentMouseX, currentMouseY = pyautogui.position()
+    #pyautogui.click(1205, 926) this will click and move the mouse
+    #testtk()
+    #print(currentMouseX, currentMouseY)
+    #pyautogui.prompt('What is your name?')
+    
+    #1205 926
+    
+
+def on_press(key):
+    if any([key in COMBO for COMBO in COMBINATIONS]):
+        current.add(key)
+        if any(all(k in current for k in COMBO) for COMBO in COMBINATIONS):
+            execute()
+
+def on_release(key):
+    if any([key in COMBO for COMBO in COMBINATIONS]):
+        current.remove(key)
+
+def start_listener():
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+        listener.join()
+
+# Create a separate thread for the listener
+listenerThread = threading.Thread(target=start_listener)
+listenerThread.start()
+#listenerThread.join() # figure out what this is? nvm this is the reason why u can't ()
+
+
+
+
+from tkinter import *
+def testtk():
+    window = Tk()
+    window.title("Welcome to LikeGeeks app")
+    lbl = Label(window, text="Hello")
+    lbl.grid(column=0, row=0)
+    window.mainloop()
+
+def test3():
+    pyautogui.prompt('What is your name?')
+    
+
 
