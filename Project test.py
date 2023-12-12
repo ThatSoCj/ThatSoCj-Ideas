@@ -1,15 +1,9 @@
 import pyautogui
 import pynput
-def test():
-    print(pyautogui.size())
-    for i in range(2): # Move mouse in a square.
-        pyautogui.moveTo(1400, 890, duration=0.25)
-    #2560 × 1664)
 
 
-def test2():
-    h = pyautogui.prompt('What is your name?')
-    print(h)
+
+
 
 
 def calculation():
@@ -46,11 +40,11 @@ def logosDictionary():
         for i in range(1, difLog + 1):
             logos = checker(f"How many logos are there for logo {i}? ")# user input
             d[i] = logos # add things to dictionary
-            print(d)
+            #print(d)
             answer = checker("goal?") # user input
             L.append(int(answer)) # add things to list
-            print(L)
-            print(L[i -1:])
+            #print(L)
+            #print(L[i -1:])
         #return [d,L]
     else:
         print("unvalid")
@@ -65,12 +59,15 @@ def logosDictionary():
         remainder = L[i-1] % d[i]
         
         if remainder ==0:
+            print("-----------------------------------")
             print(f"logo({i}) you need {answer} sheets")
             A.append(float(math))
         elif 0 <remainder< 5:
+            print("------------------------------------------------------------")
             print(f"logo({i}) you need {answer} and less then an half of sheet")
             A.append(float(math))
         elif remainder == 5:
+            print("----------------------------------------------")
             print(f"logo({i}) you need {answer} and a half sheet")
             A.append(float(math))
         else: #5 <remainder< 9:
@@ -94,10 +91,10 @@ def start():
         #print(f"There are {key}")
         stuff.append(int(key))
     logAmount = combind()
-    print("you can now press shift and s")
+    #print("you can now press shift and s")
 
-    return logAmount
-        
+    #return logAmount
+       
         
 
 
@@ -129,11 +126,16 @@ def execute1():
     logAmount = combind()
     global goalcount
     goalcount +=1
+    pyautogui.click()
     for i in logAmount:
         if logAmount[i] <= goalcount:
+            print("--------------------")
             print(f"logo({i}) is finish")
+            print(goalcount,"sheet")
         else:
+            print("--------------------")
             print(f"logo({i}) is not done")
+            print(goalcount,"sheet")
         
 
     #print(stuff)
@@ -142,12 +144,13 @@ def execute1():
     #pyautogui.prompt('What is your name?')
     return goalcount
 
-def execute():
+def execute2():
     #currentMouseX, currentMouseY = pyautogui.position()
-    #pyautogui.click(1205, 926) this will click and move the mouse
-    #testtk()
-    #print(currentMouseX, currentMouseY)
-    #pyautogui.prompt('What is your name?')
+    #pyautogui.click(currentMouseX, currentMouseY) #this will click and move the mouse
+    #print(currentMouseX, currentMouseY)'
+    testtk()
+   
+    
     
     #1205 926
     
@@ -156,7 +159,7 @@ def on_press(key):
     if any([key in COMBO for COMBO in COMBINATIONS]):
         current.add(key)
         if any(all(k in current for k in COMBO) for COMBO in COMBINATIONS):
-            execute()
+            execute1()
 
 def on_release(key):
     if any([key in COMBO for COMBO in COMBINATIONS]):
@@ -165,6 +168,7 @@ def on_release(key):
 def start_listener():
     with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
+        
 
 # Create a separate thread for the listener
 listenerThread = threading.Thread(target=start_listener)
@@ -174,16 +178,10 @@ listenerThread.start()
 
 
 
-from tkinter import *
-def testtk():
-    window = Tk()
-    window.title("Welcome to LikeGeeks app")
-    lbl = Label(window, text="Hello")
-    lbl.grid(column=0, row=0)
-    window.mainloop()
 
-def test3():
-    pyautogui.prompt('What is your name?')
-    
+
+
+
+
 
 
